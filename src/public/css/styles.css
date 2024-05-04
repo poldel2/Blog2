@@ -1,0 +1,18 @@
+body {
+    margin: 0;
+}
+
+.nav {
+    background-color: #42A5F5;
+    position: sticky;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 60px;
+    top: 0;
+}
+
+.nav__item {
+    display: inline-block;
+    margin: 0px 30px;
+}
