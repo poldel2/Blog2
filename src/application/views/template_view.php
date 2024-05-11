@@ -7,25 +7,26 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
 
-    <link rel="stylesheet" href="src/public/css/styles.css">
+    <link rel="stylesheet" href="/src/public/css/styles.css">
 </head>
 <body>
 
 <nav class="nav">
-    <div class="nav__title">Site Title</div>
+    <div class="nav__title">Блог</div>
     <ul class="nav__list">
-        <li class="nav__item">Services</li>
-        <li class="nav__item">About Us</li>
-        <li class="nav__item">Blog</li>
+        <li class="nav__item"><a href="/addArticle">Добавить статью</a></li>
+        <li class="nav__item"><a href="/main">Просмотреть статьи</a></li>
+        <li class="nav__item"><a href="/blog">эээ</a></li>
         <?php
 
-        use Laravel\Blog\application\Controllers\controller_login;
+        use Laravel\Blog\application\Controllers\AuthController;
         use Laravel\Blog\application\models\SessionManager;
 
         SessionManager::init();
 
-        if (Controller_login::isLoggedIn()) {
+        if (AuthController::isLoggedIn()) {
             $username = SessionManager::get('login');
+            //$username = AuthController::getUser()->getUsername();
             echo "Привет, $username!";
         } else {
             echo "Гость";

@@ -16,21 +16,25 @@ class UserRepository extends Repository
             $email = $entity->email;
             $password = $entity->password;
 
-            $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-            $stmt = $this->db->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
-            $stmt->execute([$name, $email, $hashedPassword]);
+            $stmt = $this->db->prepare("INSERT INTO users (name, email, password) VALUES (:name, :email, :password)");
+            $stmt->execute([
+                'name' => $name,
+                'email' => $email,
+                'password' => $hashedPassword
+            ]);
         }
     }
 
     public function getByKey($key): ?User
     {
-        $stmt = $this->db->prepare("SELECT * FROM users WHERE name = ?");
+        $stmt = $this->db->prepare("SELECT * FROM users WHERE id = ?");
         $stmt->execute([$key]);
 
         $userRow = $stmt->fetch(PDO::FETCH_ASSOC);
         if ($userRow) {
-            return new User($userRow['id'], $userRow['email'], $userRow['name'], $userRow['password']);
+            return new User($userRow['id'], $userRow['name'], $userRow['email'], $userRow['password']);
         } else {
             return null;
         }

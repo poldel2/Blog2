@@ -3,20 +3,17 @@
 namespace Laravel\Blog\application\Controllers;
 
 use Laravel\Blog\application\core\Controller;
+use Laravel\Blog\application\DB;
 use Laravel\Blog\application\models\Repositories\UserRepository;
 use Laravel\Blog\application\models\SessionManager;
 use Laravel\Blog\application\models\User;
 use Laravel\Blog\application\models\UserMapper;
 
-class controller_login extends Controller {
-    public function index(): void
-    {
-        $this->view->generate("login_view.php");
-    }
-
-    public static function login(string $login): void
+class AuthController {
+    public static function createSession(string $login, int $id): void
     {
         SessionManager::set('login', $login);
+        SessionManager::set('user_id', $id);
         header("Location: index.php");
     }
 
@@ -24,21 +21,21 @@ class controller_login extends Controller {
     {
         // Здесь вы можете использовать методы сессии для удаления идентификатора пользователя
         SessionManager::remove('login');
+        SessionManager::remove('user_id');
     }
 
     public static function isLoggedIn(): bool
     {
         // Проверка, залогинен ли пользователь
-        return SessionManager::has('login');
+        return SessionManager::has('user_id');
     }
 
     public static function getUser(): ?User
     {
-        // Получение объекта пользователя, если пользователь залогинен
         if (self::isLoggedIn()) {
-            $login = SessionManager::get('login');
-            $userRepository = new UserRepository();
-            $userRepository->getByKey($login);
+            $id = SessionManager::get('user_id');
+            $userRepository = new UserRepository(DB::getConnection());
+            return $userRepository->getByKey($id);
         }
         return null;
     }

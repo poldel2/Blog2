@@ -36,15 +36,12 @@ class controller_register extends Controller
                 return;
             }
 
-            // Хеширование пароля
-            $hashed_password = password_hash($password_1, PASSWORD_DEFAULT);
-
-            $db = new DB();
+            $db = DB::getConnection();
 
             // Создание объекта пользователя
             $userRepository = new UserRepository($db);
 
-            $user = new UserDTO($username, $email, $hashed_password);
+            $user = new UserDTO($username, $email, $password_1);
 
             $userRepository->save($user);
 
@@ -53,7 +50,7 @@ class controller_register extends Controller
 
             SessionManager::init();
 
-            controller_login::login($username);
+            AuthController::createSession($username, $db->lastInsertId());
         }
     }
 }

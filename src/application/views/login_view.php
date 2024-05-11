@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <title>Вход</title>
-    <link rel="stylesheet" href="public/css/Login.css">
+    <link rel="stylesheet" href="src/public/css/Login.css">
 </head>
 <body>
 <div class="login-container">
     <h2>Вход</h2>
-    <form method="POST" action="">
+    <form method="POST" action="/login/process">
         <div class="form-group">
-            <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" required>
+            <label for="name">Имя:</label>
+            <input class="form-control" id="name" name="name" required>
         </div>
         <div class="form-group">
             <label for="password">Пароль:</label>

@@ -1,30 +1,52 @@
 <?php
 
 namespace Laravel\Blog\application\core;
-use Laravel\Blog\application\Controllers\Controller_Main;
-use Laravel\Blog\application\Controllers\controller_register;
 
-class Router
-{
-    public static function route(): void
-    {
-        echo 'qq1233';
-        $uri = $_SERVER['REQUEST_URI'];
-        $uri = trim($uri, '/'); // Убираем слэши в начале и конце
+use Laravel\Blog\application\Controllers\Controller_AddArticle;
+use Laravel\Blog\application\Controllers\Controller_Article;
+use Laravel\Blog\application\Controllers\Controller_Comment;
+use Laravel\Blog\application\Controllers\Controller_Login;
+use Laravel\Blog\application\Controllers\Controller_Register;
 
-        if ($uri === 'register') {
-            // Обработка страницы регистрации
-            $controller = new controller_register();
-            $controller->index();
-            echo 'reg';
-        } elseif ($uri === 'register/process') {
-            // Обработка POST запроса
-            $controller = new controller_register();
-            $controller->register();
-            echo 'reg2';
-        } elseif ($uri === 'main') {
-            $controller = new Controller_Main();
-            $controller->index();
+class Router {
+    protected $routes = [
+        'register' => ['controller' => Controller_Register::class, 'method' => 'index'],
+        'register/process' => ['controller' => Controller_Register::class, 'method' => 'register'],
+        'login' => ['controller' => Controller_Login::class, 'method' => 'index'],
+        'login/process' => ['controller' => Controller_Login::class, 'method' => 'login'],
+        'main' => ['controller' => Controller_Article::class, 'method' => 'index'],
+        'addArticle' => ['controller' => Controller_AddArticle::class, 'method' => 'index'],
+        'addArticle/process' => ['controller' => Controller_AddArticle::class, 'method' => 'addArticle'],
+        'article/view/{article_id}' => ['controller' => Controller_Article::class, 'method' => 'viewArticle'],
+        'addComment/process' => ['controller' => Controller_Comment::class, 'method' => 'addComment'],
+        'fetchComments/{article_id}/{page}' => ['controller' => Controller_Comment::class, 'method' => 'fetchComments']
+
+    ];
+
+    function route(): void {
+        $uri = trim($_SERVER['REQUEST_URI'], '/');
+        $uriParts = explode('/', $uri);
+
+        // Определение пути и параметра
+        foreach ($this->routes as $path => $controllerInfo) {
+            $pattern = preg_replace('#\{[\w]+\}#', '([^/]+)', $path);
+            if (preg_match('#^' . $pattern . '$#', $uri, $matches)) {
+                array_shift($matches); // Удаляем полное совпадение с паттерном
+                $controllerName = $controllerInfo['controller'];
+                $method = $controllerInfo['method'];
+
+                $controller = new $controllerName();
+                if (!empty($matches)) {
+                    $controller->$method(...$matches); // Передаем параметры как аргументы в метод
+                } else {
+                    $controller->$method();
+                }
+
+                return;
+            }
         }
+
+        echo "404 Not Found";
     }
+
 }
