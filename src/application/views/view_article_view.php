@@ -7,11 +7,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="/src/public/css/Article.css">
     <?php $article = $data['article']; echo $article->getId();?>
-    <title><?= htmlspecialchars($article->getTitle()) ?> 13</title>
+    <title><?= htmlspecialchars($article->getTitle()) ?> </title>
 
 </head>
 <body>
-<h1><?= htmlspecialchars($article->getTitle()) ?> ege</h1>
+<h1><?= htmlspecialchars($article->getTitle()) ?></h1>
 <p><?= nl2br(htmlspecialchars($article->getContent())) ?></p>
 
 <h2>Комментарии</h2>
@@ -34,12 +34,10 @@
         xhr.onload = () => {
             if (xhr.status === 200) {
                 const newComments = JSON.parse(xhr.responseText);
-                console.log(newComments);
                 const commentsContainer = document.getElementById('comments');
                 newComments.forEach(comment => {
                     const p = document.createElement('p');
-                    console.log(comment.content);
-                    p.textContent = comment.content; // Предполагаем, что столбец содержания называется content
+                    p.textContent = `${comment.name}: ${comment.comment}`; // Отображение как "имя отправителя: комментарий"
                     commentsContainer.appendChild(p);
                 });
                 current_page++;
@@ -49,6 +47,7 @@
         };
         xhr.send();
     }
+
 
 
     // Для начальной загрузки

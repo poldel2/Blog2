@@ -29,7 +29,7 @@
             //$username = AuthController::getUser()->getUsername();
             echo "Привет, $username!";
         } else {
-            echo "Гость";
+            echo "<a href='/login'>Гость</a>";
         }
         ?>
     </ul>

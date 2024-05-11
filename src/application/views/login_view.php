@@ -18,6 +18,7 @@
             <input type="password" class="form-control" id="password" name="password" required>
         </div>
         <button type="submit" class="btn btn-primary">Войти</button>
+        <a href="/register">Еще нет аккаунта?</a>
     </form>
 </div>
 </body>

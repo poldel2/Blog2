@@ -3,6 +3,8 @@
 namespace Laravel\Blog\application\Controllers;
 
 use Laravel\Blog\application\DB;
+use Laravel\Blog\application\models\Comment;
+use Laravel\Blog\application\models\Repositories\CommentsRepository;
 use PDO;
 
 class Controller_Comment
@@ -14,11 +16,10 @@ class Controller_Comment
             $userId = $_POST['user_id'];
             $commentContent = $_POST['comment_content'];
 
-            echo "  ";
-            echo $userId;
-            $db = DB::getConnection();
-            $stmt = $db->prepare("INSERT INTO comments (article_id, user_id, comment) VALUES (?, ?, ?)");
-            $stmt->execute([$articleId, $userId, $commentContent]);
+            $comment = new Comment($articleId, $userId, $commentContent);
+
+            $commentRepository = new CommentsRepository(DB::getConnection());
+            $commentRepository->save($comment);
 
             header("Location: /article/view/" . $articleId);
             exit;
@@ -27,21 +28,9 @@ class Controller_Comment
 
     public function fetchComments(int $articleId, int $page): void
     {
-        $limit = $page == 0 ? 2 : 10; // Первая загрузка 2 комментария, последующие по 10
-        $offset = $page * $limit;
-
-
-        $db = DB::getConnection();
-        $stmt = $db->prepare("SELECT * FROM comments WHERE article_id = :article_id LIMIT :limit OFFSET :offset");
-        $stmt->bindParam(':article_id', $articleId, PDO::PARAM_INT);
-        $stmt->bindParam(':limit', $limit, PDO::PARAM_INT);
-        $stmt->bindParam(':offset', $offset, PDO::PARAM_INT);
-        $stmt->execute();
-
-        $comments = $stmt->fetchAll(PDO::FETCH_ASSOC);
-       // var_dump($comments);
+        $repository = new CommentsRepository(DB::getConnection());
+        $comments = $repository->getCommentsWithAuthor($articleId, $page);
         echo json_encode($comments);
-
     }
 
 

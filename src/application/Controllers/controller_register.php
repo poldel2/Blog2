@@ -45,12 +45,11 @@ class controller_register extends Controller
 
             $userRepository->save($user);
 
-            // Вывод сообщения об успешной регистрации
-            echo "Регистрация прошла успешно";
-
             SessionManager::init();
 
             AuthController::createSession($username, $db->lastInsertId());
+
+            header("Location: /main");
         }
     }
 }
