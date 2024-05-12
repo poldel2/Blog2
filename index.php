@@ -1,6 +1,6 @@
 <?php
 
-use Laravel\Blog\application\core\Router;
+use Laravel\Blog\Framework\core\Router;
 
 require 'vendor/autoload.php';
 

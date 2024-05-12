@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Blog\application\core;
+namespace Laravel\Blog\Framework\core;
 
 use Laravel\Blog\application\Controllers\Controller_AddArticle;
 use Laravel\Blog\application\Controllers\Controller_Article;
@@ -31,17 +31,16 @@ class Router {
         $uri = trim($_SERVER['REQUEST_URI'], '/');
         $uriParts = explode('/', $uri);
 
-        // Определение пути и параметра
         foreach ($this->routes as $path => $controllerInfo) {
             $pattern = preg_replace('#\{[\w]+\}#', '([^/]+)', $path);
             if (preg_match('#^' . $pattern . '$#', $uri, $matches)) {
-                array_shift($matches); // Удаляем полное совпадение с паттерном
+                array_shift($matches);
                 $controllerName = $controllerInfo['controller'];
                 $method = $controllerInfo['method'];
 
                 $controller = new $controllerName();
                 if (!empty($matches)) {
-                    $controller->$method(...$matches); // Передаем параметры как аргументы в метод
+                    $controller->$method(...$matches);
                 } else {
                     $controller->$method();
                 }

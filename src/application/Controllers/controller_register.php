@@ -3,11 +3,12 @@
 
 namespace Laravel\Blog\application\Controllers;
 
-use Laravel\Blog\application\core\Controller;
 use Laravel\Blog\application\DB;
 use Laravel\Blog\application\models\Repositories\UserRepository;
 use Laravel\Blog\application\models\SessionManager;
 use Laravel\Blog\application\models\UserDTO;
+use Laravel\Blog\Framework\core\Controller;
+use Laravel\Blog\Framework\Validators\FormValidator;
 
 class controller_register extends Controller
 {
@@ -19,6 +20,30 @@ class controller_register extends Controller
     function register(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $validator = new FormValidator();
+
+            // Валидация полей
+            if (!$validator->validateField('name', $_POST['name'])) {
+                header ("Location: /register");
+                return;
+            }
+
+            if (!$validator->validateField('email', $_POST['email'])) {
+                header ("Location: /register");
+                return;
+            }
+
+            if (!$validator->validateField('password', $_POST['password'])) {
+                header ("Location: /register");
+                return;
+            }
+
+            if (!$validator->validateField('password_confirmation', $_POST['password_confirmation'])) {
+                header ("Location: /register");
+                return;
+            }
+
             // Получение данных из POST-запроса
             $username = $_POST['name'];
             $email = $_POST['email'];

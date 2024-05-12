@@ -1,11 +1,11 @@
 <?php
 
 namespace Laravel\Blog\application\Controllers;
-use Laravel\Blog\application\core\Controller;
 use Laravel\Blog\application\DB;
 use Laravel\Blog\application\models\Article;
 use Laravel\Blog\application\models\Repositories\ArticleRepository;
 use Laravel\Blog\application\models\SessionManager;
+use Laravel\Blog\Framework\core\Controller;
 
 class Controller_Article extends Controller
 {
@@ -44,7 +44,6 @@ class Controller_Article extends Controller
     {
         $article = $this->articleRepository->getByKey($id);
         SessionManager::init();
-        // Проверка пользователя (сюда нужно добавить ваш метод проверки авторизации и сравнения ID)
         if (SessionManager::get('user_id') == $article->getUserId()) {
             $data = [
                 'article' => $article

@@ -1,5 +1,5 @@
 <?php
-require __DIR__.'/../../DB.php';
+require __DIR__ . '/../../DB.php';
 
 $db = \Laravel\Blog\application\DB::getConnection();
 

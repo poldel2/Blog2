@@ -2,7 +2,6 @@
 
 namespace Laravel\Blog\application\Controllers;
 
-use Laravel\Blog\application\core\Controller;
 use Laravel\Blog\application\DB;
 use Laravel\Blog\application\models\Repositories\UserRepository;
 use Laravel\Blog\application\models\SessionManager;

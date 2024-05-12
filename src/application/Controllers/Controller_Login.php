@@ -2,9 +2,9 @@
 
 namespace Laravel\Blog\application\Controllers;
 
-use Laravel\Blog\application\core\Controller;
 use Laravel\Blog\application\DB;
 use Laravel\Blog\application\models\SessionManager;
+use Laravel\Blog\Framework\core\Controller;
 
 class Controller_Login extends Controller
 {
