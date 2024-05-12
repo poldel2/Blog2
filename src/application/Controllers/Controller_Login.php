@@ -36,19 +36,25 @@ class Controller_Login extends Controller
             $statement = $db->prepare($query);
             $statement->execute(['name' => $name]);
             $user = $statement->fetch();
-            $hash = $user['password'];
-            // Проверка наличия пользователя и сравнение пароля
-            if (password_verify($password, $hash)) {
-                // Вход выполнен
-                SessionManager::init();
-                AuthController::createSession($user['name'], $user['id']);
+            if ($user) {
+                $hash = $user['password'];
+                // Проверка наличия пользователя и сравнение пароля
+                if (password_verify($password, $hash)) {
+                    // Вход выполнен
+                    SessionManager::init();
+                    AuthController::createSession($user['name'], $user['id']);
 
-                // Редирект на главную страницу или другую страницу после успешного входа
-                header("Location: /main");
-                exit();
+                    // Редирект на главную страницу или другую страницу после успешного входа
+                    header("Location: /main");
+                    exit();
+                } else {
+                    header("Location: /login");
+                    echo "Ошибка входа. Проверьте правильность логина и пароля.";
+                    echo $user['password'];
+                }
             } else {
+                header("Location: /login");
                 echo "Ошибка входа. Проверьте правильность логина и пароля.";
-                echo $user['password'];
             }
         }
     }

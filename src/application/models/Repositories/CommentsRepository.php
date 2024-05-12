@@ -41,7 +41,7 @@ class CommentsRepository extends Repository
 
     public function getCommentsWithAuthor($articleId, $page): bool|array
     {
-        $limit = 1;
+        $limit = 5;
         $offset = $limit * ($page - 1);
 
         $stmt = $this->db->prepare("
@@ -49,6 +49,7 @@ class CommentsRepository extends Repository
         FROM comments c 
         JOIN users u ON c.user_id = u.id 
         WHERE c.article_id = :articleId 
+        ORDER BY c.created_at DESC
         LIMIT :limit OFFSET :offset
     ");
         $stmt->bindParam(':articleId', $articleId, PDO::PARAM_INT);

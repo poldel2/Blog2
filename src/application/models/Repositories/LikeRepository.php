@@ -2,28 +2,47 @@
 
 namespace Laravel\Blog\application\models\Repositories;
 
+use Laravel\Blog\application\DB;
+use Laravel\Blog\application\models\Like;
 use Laravel\Blog\application\models\Repositories\Repository;
 
-class LikeRepository extends Repository
+class LikeRepository
 {
 
-    public function getByKey($key)
+    private $connection;
+
+    public function __construct($connection)
     {
-        // TODO: Implement getByKey() method.
+        $this->connection = $connection;
     }
 
-    public function save($entity)
+    public function addLike($articleId, $userId)
     {
-        // TODO: Implement save() method.
+        $sql = "INSERT INTO likes (article_id, user_id) VALUES (?, ?)";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$articleId, $userId]);
     }
 
-    public function delete($key)
+    public function removeLike($articleId, $userId)
     {
-        // TODO: Implement delete() method.
+        $sql = "DELETE FROM likes WHERE article_id = ? AND user_id = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$articleId, $userId]);
     }
 
-    public function update($entity)
+    public function checkLikeExists($articleId, $userId)
     {
-        // TODO: Implement update() method.
+        $sql = "SELECT COUNT(*) FROM likes WHERE article_id = ? AND user_id = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$articleId, $userId]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+    public function countLikes($articleId)
+    {
+        $sql = "SELECT COUNT(*) FROM likes WHERE article_id = ?";
+        $stmt = $this->connection->prepare($sql);
+        $stmt->execute([$articleId]);
+        return $stmt->fetchColumn();
     }
 }

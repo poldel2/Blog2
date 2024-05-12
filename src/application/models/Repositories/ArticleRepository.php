@@ -51,10 +51,15 @@ class ArticleRepository extends Repository
             $title = $entity->getTitle();
             $content = $entity->getContent();
 
-            $stmt = $this->db->prepare("UPDATE Articles SET id = ?, title = ?, content = ? WHERE id = ?");
-            $stmt->execute([$id, $title, $content, $id]);
+            $stmt = $this->db->prepare("UPDATE Articles SET title = :title, content = :content WHERE id = :id");
+            $stmt->execute([
+                ':title' => $title,
+                ':content' => $content,
+                ':id' => $id
+            ]);
         }
     }
+
 
     public function getArticles($page, $limit = 10)
     {

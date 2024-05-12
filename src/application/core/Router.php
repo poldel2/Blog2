@@ -7,6 +7,7 @@ use Laravel\Blog\application\Controllers\Controller_Article;
 use Laravel\Blog\application\Controllers\Controller_Comment;
 use Laravel\Blog\application\Controllers\Controller_Login;
 use Laravel\Blog\application\Controllers\Controller_Register;
+use Laravel\Blog\application\Controllers\LikeController;
 
 class Router {
     protected $routes = [
@@ -19,8 +20,11 @@ class Router {
         'addArticle/process' => ['controller' => Controller_AddArticle::class, 'method' => 'addArticle'],
         'article/view/{article_id}' => ['controller' => Controller_Article::class, 'method' => 'viewArticle'],
         'addComment/process' => ['controller' => Controller_Comment::class, 'method' => 'addComment'],
-        'fetchComments/{article_id}/{page}' => ['controller' => Controller_Comment::class, 'method' => 'fetchComments']
-
+        'fetchComments/{article_id}/{page}' => ['controller' => Controller_Comment::class, 'method' => 'fetchComments'],
+        'likesCount/{article_id}' => ['controller' => LikeController::class, 'method' => 'countLikes'],
+        'toggleLike/{article_id}/{user_id}' => ['controller' => LikeController::class, 'method' => 'toggleLike'],
+        'article/view/editArticle/{article_id}' => ['controller' => Controller_Article::class, 'method' => 'editArticle'],
+        'article/view/editArticle/process/{article_id}' => ['controller' => Controller_Article::class, 'method' => 'updateArticle']
     ];
 
     function route(): void {
@@ -45,7 +49,6 @@ class Router {
                 return;
             }
         }
-
         echo "404 Not Found";
     }
 

@@ -27,9 +27,11 @@
         if (AuthController::isLoggedIn()) {
             $username = SessionManager::get('login');
             //$username = AuthController::getUser()->getUsername();
-            echo "Привет, $username!";
+            $user = AuthController::getUser();
+            echo "<a href='/login'>$username </a>";
         } else {
             echo "<a href='/login'>Гость</a>";
+            $user = null;
         }
         ?>
     </ul>
