@@ -27,7 +27,7 @@
 </div>
 
 <div id="comments">
-    <!-- Здесь будут динамически загружаться комментарии -->
+
 </div>
 
 <button id="loadMoreComments" onclick="loadComments()">Показать еще</button>
@@ -47,7 +47,7 @@
                 const commentsContainer = document.getElementById('comments');
                 newComments.forEach(comment => {
                     const p = document.createElement('p');
-                    p.textContent = `${comment.name}: ${comment.comment}`; // Отображение как "имя отправителя: комментарий"
+                    p.textContent = `${comment.name}: ${comment.comment}`;
                     commentsContainer.appendChild(p);
                 });
                 current_page++;
@@ -87,7 +87,7 @@
                 console.log(xhr.responseText);
                 const data = JSON.parse(xhr.responseText);
                 if (data.success) {
-                    fetchLikes(); // Обновляем количество лайков после изменения
+                    fetchLikes();
                 }
             } else {
                 console.error('Failed to toggle like:', xhr.responseText);
@@ -112,7 +112,7 @@
 <h3>Добавить комментарий</h3>
 <form action="/addComment/process" method="post">
     <input type="hidden" name="article_id" value="<?= $article->getId(); ?>">
-    <input type="hidden" name="user_id" value="<?= $userId; // Убедитесь, что user_id сохранён в сессии ?>">
+    <input type="hidden" name="user_id" value="<?= $user ? $user->getId() : 0 ?>">
     <label>
         <textarea name="comment_content" required></textarea>
     </label><br>

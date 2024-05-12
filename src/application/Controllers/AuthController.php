@@ -18,14 +18,12 @@ class AuthController {
 
     public static function logout(): void
     {
-        // Здесь вы можете использовать методы сессии для удаления идентификатора пользователя
         SessionManager::remove('login');
         SessionManager::remove('user_id');
     }
 
     public static function isLoggedIn(): bool
     {
-        // Проверка, залогинен ли пользователь
         return SessionManager::has('user_id');
     }
 

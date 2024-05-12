@@ -32,7 +32,6 @@ class Controller_Article extends Controller
 
     function viewArticle($id): void
     {
-
         $article = $this->articleRepository->getByKey($id);
         $data = [
             'article' => $article

@@ -40,10 +40,14 @@ class FormValidator implements Validator
                     $isValid = false;
                 }
                 break;
+            case 'comment':
+                if (empty(trim($value)) || strlen(trim($value)) > $this->maxLength) {
+                    $this->errors[$fieldName] = 'Комментарий должен быть меньше 255 символов';
+                    $isValid = false;
+                }
+                break;
         }
 
-        // Экранирование HTML-тегов для защиты от XSS
-        $this->errors[$fieldName] = htmlspecialchars($this->errors[$fieldName] ?? '');
 
         return $isValid;
     }

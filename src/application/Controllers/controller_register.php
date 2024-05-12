@@ -23,7 +23,6 @@ class controller_register extends Controller
 
             $validator = new FormValidator();
 
-            // Валидация полей
             if (!$validator->validateField('name', $_POST['name'])) {
                 header ("Location: /register");
                 return;
@@ -44,17 +43,10 @@ class controller_register extends Controller
                 return;
             }
 
-            // Получение данных из POST-запроса
             $username = $_POST['name'];
             $email = $_POST['email'];
             $password_1 = $_POST['password'];
             $password_2 = $_POST['password_confirmation'];
-
-            // Валидация данных (например, проверка на пустые поля, совпадение паролей и т. д.)
-            if (empty($username) || empty($email) || empty($password_1) || empty($password_2)) {
-                echo "Заполните все поля";
-                return;
-            }
 
             if ($password_1 !== $password_2) {
                 echo "Пароли не совпадают";
@@ -63,7 +55,6 @@ class controller_register extends Controller
 
             $db = DB::getConnection();
 
-            // Создание объекта пользователя
             $userRepository = new UserRepository($db);
 
             $user = new UserDTO($username, $email, $password_1);

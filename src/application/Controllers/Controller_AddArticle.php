@@ -26,8 +26,7 @@ class Controller_AddArticle extends Controller
 
             $title = $_POST['title'];
             $content = $_POST['content'];
-            $user_id = SessionManager::get('user_id'); // Предполагаем, что user_id хранится в сессии
-
+            $user_id = SessionManager::get('user_id');
             $db = DB::getConnection();
 
             $articleRepository = new ArticleRepository($db);

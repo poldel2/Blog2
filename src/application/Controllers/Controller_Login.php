@@ -22,8 +22,6 @@ class Controller_Login extends Controller
             $name = $_POST['name'];
             $password = $_POST['password'];
 
-            // Валидация данных (например, проверка на пустые поля)
-
             if (empty($name) || empty($password)) {
                 echo "Введите имя пользователя и пароль";
                 return;
@@ -38,13 +36,10 @@ class Controller_Login extends Controller
             $user = $statement->fetch();
             if ($user) {
                 $hash = $user['password'];
-                // Проверка наличия пользователя и сравнение пароля
                 if (password_verify($password, $hash)) {
-                    // Вход выполнен
                     SessionManager::init();
                     AuthController::createSession($user['name'], $user['id']);
 
-                    // Редирект на главную страницу или другую страницу после успешного входа
                     header("Location: /main");
                     exit();
                 } else {

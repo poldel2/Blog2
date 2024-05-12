@@ -31,6 +31,11 @@ class Router {
         $uri = trim($_SERVER['REQUEST_URI'], '/');
         $uriParts = explode('/', $uri);
 
+        if (empty($uri)) {
+            $this->redirect('/main');
+            return;
+        }
+
         foreach ($this->routes as $path => $controllerInfo) {
             $pattern = preg_replace('#\{[\w]+\}#', '([^/]+)', $path);
             if (preg_match('#^' . $pattern . '$#', $uri, $matches)) {
@@ -49,6 +54,11 @@ class Router {
             }
         }
         echo "404 Not Found";
+    }
+
+    protected function redirect(string $url): void {
+        header("Location: $url");
+        exit;
     }
 
 }

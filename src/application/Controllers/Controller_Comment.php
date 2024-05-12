@@ -6,6 +6,7 @@ use Laravel\Blog\application\DB;
 use Laravel\Blog\application\models\Comment;
 use Laravel\Blog\application\models\Repositories\CommentsRepository;
 use Laravel\Blog\application\models\SessionManager;
+use Laravel\Blog\Framework\Validators\FormValidator;
 use PDO;
 
 class Controller_Comment
@@ -13,8 +14,14 @@ class Controller_Comment
     public function addComment(): void
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
+            $validator = new FormValidator();
             $articleId = $_POST['article_id'];
+
+            if (!$validator->validateField('comment', $_POST['comment_content'])) {
+                header("Location: /article/view/" . $articleId);
+                return;
+            }
+
             $userId = $_POST['user_id'];
             $commentContent = $_POST['comment_content'];
 
@@ -23,9 +30,8 @@ class Controller_Comment
             $currentTime = time();
             $lastCommentTime = SessionManager::get('last_comment_time') ? : 0;
 
-            if ($currentTime - $lastCommentTime < 60) { // Проверка интервала
-               // echo json_encode(["error" => "Вы можете отправлять комментарии не чаще чем раз в минуту"]);
-                //http_response_code(429); // Too Many Requests
+            if (($currentTime - $lastCommentTime < 60) || $userId == 0) {
+                echo "123132";
                 header("Location: /article/view/" . $articleId);
                 return;
             }
