@@ -2,8 +2,8 @@
 
 namespace Laravel\Blog\application\Controllers;
 
-use Laravel\Blog\application\DB;
 use Laravel\Blog\application\models\Repositories\LikeRepository;
+use Laravel\Blog\Framework\DB;
 
 class LikeController
 {

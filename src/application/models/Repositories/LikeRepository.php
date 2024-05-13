@@ -2,9 +2,6 @@
 
 namespace Laravel\Blog\application\models\Repositories;
 
-use Laravel\Blog\application\DB;
-use Laravel\Blog\application\models\Repositories\Repository;
-
 class LikeRepository
 {
 

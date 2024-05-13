@@ -2,11 +2,11 @@
 
 namespace Laravel\Blog\application\Controllers;
 
-use Laravel\Blog\application\DB;
 use Laravel\Blog\application\models\Repositories\UserRepository;
-use Laravel\Blog\application\models\SessionManager;
 use Laravel\Blog\application\models\User;
 use Laravel\Blog\application\models\UserMapper;
+use Laravel\Blog\Framework\DB;
+use Laravel\Blog\Framework\SessionManager;
 
 class AuthController {
     public static function createSession(string $login, int $id): void

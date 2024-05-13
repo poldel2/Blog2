@@ -1,8 +1,9 @@
 <?php
 
-namespace Laravel\Blog\application;
+namespace Laravel\Blog\Framework;
 use Exception;
 use PDO;
+
 class DB
 {
     public static function getConnection()

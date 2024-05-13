@@ -2,7 +2,6 @@
 
 namespace Laravel\Blog\application\models\Repositories;
 
-use Laravel\Blog\application\DB;
 use Laravel\Blog\application\models\User;
 use Laravel\Blog\application\models\UserDTO;
 use PDO;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Laravel\Blog\application\models;
+namespace Laravel\Blog\Framework;
 
 class SessionManager
 {

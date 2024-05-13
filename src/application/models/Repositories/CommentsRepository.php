@@ -2,9 +2,8 @@
 
 namespace Laravel\Blog\application\models\Repositories;
 
-use Laravel\Blog\application\DB;
 use Laravel\Blog\application\models\Comment;
-use Laravel\Blog\application\models\Repositories\Repository;
+use Laravel\Blog\Framework\DB;
 use PDO;
 
 class CommentsRepository extends Repository

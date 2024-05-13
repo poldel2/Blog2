@@ -2,12 +2,11 @@
 
 namespace Laravel\Blog\application\Controllers;
 
-use Laravel\Blog\application\DB;
 use Laravel\Blog\application\models\Comment;
 use Laravel\Blog\application\models\Repositories\CommentsRepository;
-use Laravel\Blog\application\models\SessionManager;
+use Laravel\Blog\Framework\DB;
+use Laravel\Blog\Framework\SessionManager;
 use Laravel\Blog\Framework\Validators\FormValidator;
-use PDO;
 
 class Controller_Comment
 {

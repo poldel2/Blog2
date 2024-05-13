@@ -2,8 +2,6 @@
 
 namespace Laravel\Blog\application\models\Repositories;
 
-use Laravel\Blog\application\DB;
-
 abstract class Repository
 {
     protected $db;
