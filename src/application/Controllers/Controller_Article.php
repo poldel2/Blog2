@@ -49,7 +49,7 @@ class Controller_Article extends Controller
             ];
             $this->view->generate('edit_article_view.php', 'template_view.php', $data);
         } else {
-            echo "Unauthorized access";
+            echo "Не автор статьи";
         }
     }
 
@@ -66,7 +66,7 @@ class Controller_Article extends Controller
 
             header('Location: /article/view/'.$id);
         } else {
-            echo "Unauthorized access";
+            echo "Не автор статьи";
         }
     }
 

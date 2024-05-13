@@ -49,7 +49,8 @@ class controller_register extends Controller
             $password_2 = $_POST['password_confirmation'];
 
             if ($password_1 !== $password_2) {
-                echo "Пароли не совпадают";
+                //По хорошему выводить еще и сообщение
+                header ("Location: /register");
                 return;
             }
 

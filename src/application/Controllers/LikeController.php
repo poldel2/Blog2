@@ -24,7 +24,7 @@ class LikeController
         }
     }
 
-    public function countLikes($articleId)
+    public function countLikes($articleId): void
     {
         $likeRepo = new LikeRepository(DB::getConnection());
         $likesCount = $likeRepo->countLikes($articleId);
