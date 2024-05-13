@@ -7,7 +7,7 @@ use Laravel\Blog\Framework\core\Controller;
 use Laravel\Blog\Framework\DB;
 use Laravel\Blog\Framework\SessionManager;
 
-class Controller_Article extends Controller
+class ArticleController extends Controller
 {
     private ArticleRepository $articleRepository;
 

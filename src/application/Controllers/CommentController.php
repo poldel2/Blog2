@@ -8,7 +8,7 @@ use Laravel\Blog\Framework\DB;
 use Laravel\Blog\Framework\SessionManager;
 use Laravel\Blog\Framework\Validators\FormValidator;
 
-class Controller_Comment
+class CommentController
 {
     public function addComment(): void
     {

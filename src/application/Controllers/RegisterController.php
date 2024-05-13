@@ -10,7 +10,7 @@ use Laravel\Blog\Framework\DB;
 use Laravel\Blog\Framework\SessionManager;
 use Laravel\Blog\Framework\Validators\FormValidator;
 
-class controller_register extends Controller
+class RegisterController extends Controller
 {
     function index(): void
     {
