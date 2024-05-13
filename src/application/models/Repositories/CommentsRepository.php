@@ -58,4 +58,14 @@ class CommentsRepository extends Repository
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+
+    public function getCommentsCountByUserAndArticle($userId, $articleId): int
+    {
+        $stmt = $this->db->prepare("SELECT COUNT(*) FROM comments WHERE user_id = :userId AND article_id = :articleId");
+        $stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+        $stmt->bindParam(':articleId', $articleId, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchColumn();
+    }
+
 }

@@ -20,24 +20,24 @@ class Controller_Comment
                 header("Location: /article/view/" . $articleId);
                 return;
             }
+            $commentRepository = new CommentsRepository(DB::getConnection());
 
             $userId = $_POST['user_id'];
             $commentContent = $_POST['comment_content'];
-
+            $commentCount = $commentRepository->getCommentsCountByUserAndArticle($userId, $articleId);
             SessionManager::init();
 
             $currentTime = time();
             $lastCommentTime = SessionManager::get('last_comment_time') ? : 0;
 
-            if (($currentTime - $lastCommentTime < 60) || $userId == 0) {
-                echo "123132";
+            if (($currentTime - $lastCommentTime < 60) || ($userId == 0) || ($commentCount > 3)) {
                 header("Location: /article/view/" . $articleId);
                 return;
             }
 
             $comment = new Comment($articleId, $userId, $commentContent);
 
-            $commentRepository = new CommentsRepository(DB::getConnection());
+
             $commentRepository->save($comment);
 
             SessionManager::set('last_comment_time', $currentTime);
